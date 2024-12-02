@@ -8,3 +8,4 @@ A new repo for my learning journey of BIN7 project --- a face recognition projec
 
 - [x] `widerface.py`
 - [x] `haarcascades.py` and `gpt_haarcascades.py`
+
