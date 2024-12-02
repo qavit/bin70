@@ -1,10 +1,11 @@
+import os
 import cv2
 import argparse
 
 
-def detect_faces_in_image(image_path, scale_factor=1.1, min_neighbors=5, min_size=(30, 30)):
+def detect_faces_in_image(image_path, scale_factor=1.2, min_neighbors=5, min_size=(50, 50)):
     # 1. Load the Haar feature classifier XML file
-    haar_cascade_path = cv2.data.haarcascades + "haarcascade_frontalface_default.xml"
+    haar_cascade_path = os.path.join(cv2.data.haarcascades, "haarcascade_frontalface_default.xml")
     face_cascade = cv2.CascadeClassifier(haar_cascade_path)
 
     # 2. Load the image
@@ -39,10 +40,13 @@ def detect_faces_in_image(image_path, scale_factor=1.1, min_neighbors=5, min_siz
 
 
 if __name__ == "__main__":
+    default_image_path = os.path.join("..", "assets", "meme_faces", "bad_luck_brian.png")
+
     parser = argparse.ArgumentParser(description="Detect faces in an image using OpenCV's Haar Cascade Classifier.")
-    parser.add_argument("image_path", type=str, nargs='?', default='./meme_faces/bad_luck_brian.png', help="Path to the image file.")
+    parser.add_argument("image_path", type=str, nargs='?', default=default_image_path, help="Path to the image file.")
     parser.add_argument("--scale_factor", type=float, default=1.2, help="Scale factor for the detection.")
     parser.add_argument("--min_neighbors", type=int, default=5, help="Minimum neighbors for the detection.")
-    parser.add_argument("--min_size", type=tuple, default=(30, 30), help="Minimum size for the detection.")
+    parser.add_argument("--min_size", type=tuple, default=(50, 50), help="Minimum size for the detection.")
     args = parser.parse_args()
+
     detect_faces_in_image(args.image_path, args.scale_factor, args.min_neighbors, args.min_size)

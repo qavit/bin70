@@ -1,5 +1,5 @@
-import cv2
 import os
+import cv2
 import numpy as np
 
 
@@ -7,7 +7,7 @@ def detect_faces_and_draw(image_path, scale_factor=1.1, min_neighbors=3, min_siz
     print(f"Processing image: {image_path}")
 
     # Load the Haar feature classifier XML file
-    haar_cascade_path = cv2.data.haarcascades + "haarcascade_frontalface_default.xml"
+    haar_cascade_path = os.path.join(cv2.data.haarcascades, "haarcascade_frontalface_default.xml")
     face_cascade = cv2.CascadeClassifier(haar_cascade_path)
 
     # Load the image
@@ -61,11 +61,11 @@ def create_gallery(image_paths, output_path, images_per_row=3):
 
 
 if __name__ == "__main__":
-    image_dir = './meme_faces/'
-    output_gallery_path = './demo_by_haar_cascades.jpg'
+    image_dir = os.path.join("..", "assets", "meme_faces")
+    output_gallery_path = os.path.join(".", "demo_by_haar_cascades.jpg")
 
     # Get all image paths in the directory
-    image_paths = [os.path.join(image_dir, f) for f in os.listdir(image_dir) if f.endswith(('.png', '.jpg', '.jpeg', '.webp'))]
+    image_paths = [os.path.join(image_dir, f) for f in os.listdir(image_dir) if f.endswith((".png", ".jpg", ".jpeg", ".webp"))]
 
     # Create a gallery of the processed images
     create_gallery(image_paths, output_gallery_path)

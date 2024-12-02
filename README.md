@@ -1,13 +1,21 @@
 # bin70
 
-A new repo for my learning journey of BIN7 project --- a face recognition project.
+A new repository for my learning journey of **BIN7 project** --- a face recognition project.
 
 > **bin7** means face (面, *bīn*) in Taigi.
 
 ## 2024-12-02
 
-- [x] [`widerface.py`](./widerface.py)
-- [x] [`haar_cascades_cli.py`](./haar_cascades_cli.py)
-- [x] [`haar_cascades_webcam.py`](./haar_cascades_webcam.py)
-- [ ] [`WIDER_FACE_with_MTCNN.ipynb`](./WIDER_FACE_with_MTCNN.ipynb)
+### Haar Cascades
+
+- [x] [`haar_cascades_cli.py`](./haar_cascades/haar_cascades_cli.py) — a CLI for face detection using Haar Cascades
+- [x] [`haar_cascades_webcam.py`](./haar_cascades/haar_cascades_webcam.py) — a webcam demo for face detection using Haar Cascades
+- [x] [`haar_cascades_demo.py`](./haar_cascades/haar_cascades_demo.py) — a demo of face detection using Haar Cascades using images in the gallery
+
+![demo](./haar_cascades/demo_by_haar_cascades.jpg)
+
+### MTCNN
+
+- [ ] [`WIDER_FACE_with_MTCNN.ipynb`](./mtcnn/WIDER_FACE_with_MTCNN.ipynb) — a notebook for face detection using MTCNN on WIDER FACE dataset
+
 
