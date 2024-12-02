@@ -1,5 +1,6 @@
 opencv-python
 mtcnn
 tensorflow
+torch
 deeplake<4
 flask
