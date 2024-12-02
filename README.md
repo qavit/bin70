@@ -6,6 +6,8 @@ A new repo for my learning journey of BIN7 project --- a face recognition projec
 
 ## 2024-12-02
 
-- [x] `widerface.py`
-- [x] `haarcascades.py` and `gpt_haarcascades.py`
+- [x] [`widerface.py`](./widerface.py)
+- [x] [`haar_cascades_cli.py`](./haar_cascades_cli.py)
+- [x] [`haar_cascades_webcam.py`](./haar_cascades_webcam.py)
+- [ ] [`WIDER_FACE_with_MTCNN.ipynb`](./WIDER_FACE_with_MTCNN.ipynb)
 
