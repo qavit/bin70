@@ -1,5 +1,6 @@
 """
 This script downloads, extracts, and processes the Caltech Face Dataset 1999.
+See README.md for more details.
 
 Example usage:
 python caltech_1999_manager.py
@@ -19,24 +20,32 @@ import json
 import argparse
 
 DATASET_URL = "https://data.caltech.edu/records/6rjah-hdv18/files/faces.tar?download=1"
-TAR_FILE = "faces.tar"
-METADATA = "ImageData.mat"
-BOUNDING_BOXES = "bbox_data.npy"
-RULES = "rules.json"
+
+CALTECH_1999_DIR = os.path.dirname(os.path.abspath(__file__))
+TAR_FILE = os.path.join(CALTECH_1999_DIR, "faces.tar")
+METADATA = os.path.join(CALTECH_1999_DIR, "ImageData.mat")
+BOUNDING_BOXES = os.path.join(CALTECH_1999_DIR, "bbox_data.npy")
+RULES = os.path.join(CALTECH_1999_DIR, "rules.json")
 
 
 # Download and extract dataset if not present
 def download_and_extract_dataset(url, tar_path, extract_path):
     if not os.path.exists(METADATA):
-        print("Dataset not found. Downloading...")
+        print("[INFO] Dataset not found.")
+        print(f"[INFO] Downloading from {url}...")
         urllib.request.urlretrieve(url, tar_path)
-        print("Download complete. Extracting...")
+        print("[INFO] Download complete.")
+        print(f"[INFO] Extracting {tar_path}...")
         with tarfile.open(tar_path, "r") as tar:
-            tar.extractall(path=extract_path, filter=tarfile.TarInfo)
-        print("Extraction complete.")
+            tar.extractall(path=extract_path)
+        print("[INFO] Extraction complete.")
+        print(f"[INFO] Deleting {tar_path}...")
         os.remove(tar_path)  # Delete the tar file after extraction
     else:
-        print("Dataset already exists.")
+        print("[INFO] Dataset already exists.")
+        if os.path.exists(tar_path):
+            print(f"[INFO] Deleting {tar_path}...")
+            os.remove(tar_path)
 
 
 # Load metadata (ImageData.mat) and save boudning boxes data as .npy
@@ -54,7 +63,7 @@ def load_metadata_and_save_bbox(mat_file_path, npy_file_path="bbox_data.npy", bb
 def move_images(source_dir, target_dir, rules):
     # Check if files are already moved
     if all(os.path.exists(os.path.join(target_dir, folder_name)) for folder_name in rules.keys()):
-        print("All files have already been moved according to rules.json.")
+        print("[INFO] All files have already been moved according to rules.json.")
         return
 
     # Ensure target directory exists
@@ -73,6 +82,7 @@ def move_images(source_dir, target_dir, rules):
             filename = f"image_{i:04d}.jpg"
             source_path = os.path.join(source_dir, filename)
             target_path = os.path.join(folder_path, filename)
+            print(f"[INFO] Moving {filename} to {folder_path}...", end="\r")
 
             if os.path.exists(source_path):
                 shutil.move(source_path, target_path)
@@ -84,15 +94,16 @@ def move_images(source_dir, target_dir, rules):
             "range": f"image_{start:04d}.jpg ~ image_{end:04d}.jpg"
         })
 
-    # Print log
-    for log in folder_log:
-        print(f"Folder: {log['folder']}, Image count: {log['images_count']}, Range: {log['range']}")
-
     # Save log to file
     log_file = os.path.join(target_dir, "folder_log.txt")
     with open(log_file, "w", encoding="utf-8") as f:
         for log in folder_log:
-            f.write(f"Folder: {log['folder']}, Image count: {log['images_count']}, Range: {log['range']}\n")
+            log_str = f"Folder: {log['folder']:10s}, \
+                        Image count: {log['images_count']:3d}, \
+                        Range: {log['range']}"
+            f.write(log_str + "\n")
+
+    print("\n[INFO] Moving completed.")
 
 
 # Randomly select 9 images, draw bounding boxes, and create a collage
@@ -110,15 +121,15 @@ def draw_bbox_on_image(image, bbox, filename):
     return image
 
 
-def remove_specified_images(start, end, directory="."):
+def remove_specified_images(start, end, directory=CALTECH_1999_DIR):
     for i in range(start, end + 1):
         filename = f"image_{i:04d}.jpg"
         file_path = os.path.join(directory, filename)
         if os.path.exists(file_path):
             os.remove(file_path)
-            print(f"Removed {filename}")
+            print(f"[INFO] Removed {filename}.")
         else:
-            print(f"File {filename} not found. It might have been already removed.")
+            print(f"[WARNING] File {filename} not found. It might have been already removed.")
 
 
 def create_collage(subdir_data, image_dir):
@@ -161,22 +172,74 @@ def create_collage(subdir_data, image_dir):
     cv2.imwrite("collage_with_bboxes.jpg", collage_image)
 
 
+def rename_readme_to_ds_info(directory):
+    """
+    Rename the README file to DS_INFO.
+    """
+    old_name = os.path.join(directory, "README")
+    new_name = os.path.join(directory, "DS_INFO")
+
+    try:
+        if os.path.exists(old_name):
+            os.rename(old_name, new_name)
+            print(f"[INFO] Renamed {old_name} to {new_name}.")
+        else:
+            print(f"[WARNING] {old_name} does not exist.")
+    except Exception as e:
+        print(f"[ERROR] Could not rename {old_name} to {new_name}: {e}")
+
+
+def purge_built_files(directory):
+    """
+    Delete the files except caltech_1999_manager.py, rules.json, and README.md
+    """
+    keep_files = {"caltech_1999_manager.py", "rules.json", "README.md"}
+    for filename in os.listdir(directory):
+        if filename not in keep_files:
+            file_path = os.path.join(directory, filename)
+            try:
+                if os.path.isfile(file_path):
+                    os.remove(file_path)
+                    print(f"[INFO] Removed {filename}.")
+            except Exception as e:
+                print(f"[ERROR] Could not remove {filename}: {e}")
+
+    rules_file = os.path.join(directory, "rules.json")
+    if os.path.exists(rules_file):
+        with open(rules_file, "r") as f:
+            rules = json.load(f)
+            for folder_name in rules.keys():
+                folder_path = os.path.join(directory, folder_name)
+                if os.path.exists(folder_path) and os.path.isdir(folder_path):
+                    try:
+                        shutil.rmtree(folder_path)
+                        print(f"[INFO] Removed directory {folder_name}.")
+                    except Exception as e:
+                        print(f"[ERROR] Could not remove directory {folder_name}: {e}")
+
+
 # Main execution
 if __name__ == "__main__":
     # Parse command-line arguments
-    parser = argparse.ArgumentParser(description="Oraganize the Caltech Face Dataset 1999and visualize face images with bounding boxes.")
+    parser = argparse.ArgumentParser(description="Organize the Caltech Face Dataset 1999 and visualize face images with bounding boxes.")
     parser.add_argument("--collage", "-c", action="store_true", help="Create a collage of 9 random images with bounding boxes.")
+    parser.add_argument("--purge", "-p", action="store_true", help="Delete the built files in the directory.")
     args = parser.parse_args()
 
+    # If --purge option is received, execute deletion operation
+    if args.purge:
+        purge_built_files(CALTECH_1999_DIR)
+        exit()
+
     # Download and extract dataset if necessary
-    download_and_extract_dataset(DATASET_URL, TAR_FILE, ".")
+    download_and_extract_dataset(DATASET_URL, TAR_FILE, CALTECH_1999_DIR)
 
     # Load and save .mat file
     subdir_data = load_metadata_and_save_bbox(METADATA, BOUNDING_BOXES)
 
     # Define source and target directories
-    source_dir = "."  # Source directory for images
-    target_dir = "."  # Target directory for organized images
+    source_dir = CALTECH_1999_DIR  # Source directory for images
+    target_dir = CALTECH_1999_DIR  # Target directory for organized images
 
     # Load rules from JSON file
     with open(RULES, "r") as f:
@@ -187,6 +250,9 @@ if __name__ == "__main__":
 
     # Remove specified images
     remove_specified_images(399, 403, source_dir)
+
+    # Rename README to DS_INFO
+    rename_readme_to_ds_info(CALTECH_1999_DIR)
 
     # Create and display collage if requested
     if args.collage:

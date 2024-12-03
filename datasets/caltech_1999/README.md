@@ -1,6 +1,6 @@
 # Caltech Face Dataset 1999 Manager
 
-This directory contains the Caltech Face Dataset 1999 and a Python script [`caltech_1999_manager.py`](./caltech_1999_manager.py), which automates downloading, organizing, and visualizing face images with bounding boxes.
+This directory contains the Caltech Face Dataset 1999 and a Python script [`caltech_1999_manager.py`](./caltech_1999_manager.py), which automates downloading, organizing, visualizing face images with bounding boxes, and managing dataset files.
 
 ## Dataset Overview
 
@@ -21,18 +21,22 @@ The `caltech_1999_manager.py` script is designed to manage the dataset by perfor
 2. **Organize Images**: Moves images into specified folders based on predefined rules.
 3. **Visualize Images**: Creates a collage of randomly selected images with bounding boxes drawn around faces.
 4. **Remove Specified Images**: Removes specific images from the dataset as required.
+5. **Purge Unwanted Files**: Deletes all files in the directory except `caltech_1999_manager.py`, `rules.json`, and `README.md`, and recursively deletes folders created based on `rules.json`.
+6. **Rename README**: Renames the downloaded `README` file to `DS_INFO`.
 
 ### Usage
 
 #### Command-Line Options
 
 - `--collage` or `-c`: Create a collage of 9 random images with bounding boxes. If this option is not specified, the collage will not be created.
+- `--purge` or `-p`: Purge unwanted files and directories in the dataset directory.
 
 #### Example Commands
 
 ```bash
 python caltech_1999_manager.py
 python caltech_1999_manager.py --collage
+python caltech_1999_manager.py --purge
 ```
 
 ### Configuration
@@ -51,7 +55,6 @@ The script includes functionality to remove specific images, such as `image_0399
 
 - Ensure that all required Python packages are installed before running the script.
 - The script assumes that the dataset URL and file structure remain consistent with the provided example.
-
 
 ## Acknowledgments
 

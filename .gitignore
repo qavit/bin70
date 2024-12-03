@@ -3,3 +3,8 @@
 /ssd/res10_300x300_ssd_iter_140000.caffemodel
 /ssd/deploy.prototxt
 /datasets/caltech_1999/*/
+*.pickle
+*.pkl
+*.pyc
+*.pyo
+*.pyd

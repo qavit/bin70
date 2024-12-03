@@ -17,24 +17,27 @@
 # 匯入必要套件
 import argparse
 import time
-from os.path import exists
+import os
 from urllib.request import urlretrieve
 
 import cv2
 import numpy as np
 from imutils.video import WebcamVideoStream
 
-prototxt = "deploy.prototxt"
-caffemodel = "res10_300x300_ssd_iter_140000.caffemodel"
+ssd_root_dir = os.path.dirname(os.path.abspath(__file__))
+prototxt = os.path.join(ssd_root_dir, "deploy.prototxt")
+caffemodel = os.path.join(ssd_root_dir, "res10_300x300_ssd_iter_140000.caffemodel")
 
 
 # 下載模型相關檔案
-if not exists(prototxt) or not exists(caffemodel):
+if not os.path.exists(prototxt) or not os.path.exists(caffemodel):
     urlretrieve(f"https://raw.githubusercontent.com/opencv/opencv/master/samples/dnn/face_detector/{prototxt}",
                 prototxt)
+    print(f"[INFO] Downloading {caffemodel}...")
     urlretrieve(
         f"https://raw.githubusercontent.com/opencv/opencv_3rdparty/dnn_samples_face_detector_20170830/{caffemodel}",
         caffemodel)
+    print(f"[INFO] Downloading {caffemodel} completed!")
 
 
 # 初始化模型 (模型使用的 Input Size為 (300, 300))
@@ -42,7 +45,7 @@ net = cv2.dnn.readNetFromCaffe(prototxt=prototxt, caffeModel=caffemodel)
 
 
 # 定義人臉偵測函數方便重複使用
-def detect(img, min_confidence=0.5):
+def detect_faces(img, min_confidence=0.5):
     # 取得 img 的大小(高，寬)
     (h, w) = img.shape[:2]
 
@@ -90,7 +93,7 @@ def main():
         # 取得當前的frame
         frame = vs.read()
 
-        rects = detect(frame, args["confidence"])
+        rects = detect_faces(frame, args["confidence"])
 
         # loop所有預測結果
         for rect in rects:
