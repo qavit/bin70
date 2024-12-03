@@ -37,3 +37,5 @@ A new repository for my learning journey of **BIN7 project** --- a face recognit
 ### Caltech Face Dataset 1999
 
 - [x] [`caltech_1999_manager.py`](./datasets/caltech_1999/caltech_1999_manager.py) — a script for managing the Caltech Face Dataset 1999, including downloading, extracting, and organizing the dataset, and visualizing face images with bounding boxes
+
+![collage](./datasets/caltech_1999/collage_with_bboxes.jpg)
