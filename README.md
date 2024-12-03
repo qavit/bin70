@@ -18,4 +18,12 @@ A new repository for my learning journey of **BIN7 project** --- a face recognit
 
 - [ ] [`WIDER_FACE_with_MTCNN.ipynb`](./mtcnn/WIDER_FACE_with_MTCNN.ipynb) — a notebook for face detection using MTCNN on WIDER FACE dataset
 
+## 2024-12-03
 
+### MTCNN
+
+- [ ] [`MTCNN_cli.py`](./mtcnn/MTCNN_cli.py) — a CLI for face detection using MTCNN
+
+### SSD
+
+- [ ] [`SSD_webcam.py`](./ssd/SSD_webcam.py) — a webcam demo for face detection using Res10 SSD

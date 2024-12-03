@@ -1,5 +1,5 @@
 """
-取自 iT 邦幫忙教學文章 [Day9] Face Detection - 使用OpenCV & Dlib：Haar cascades
+改寫自 iT 邦幫忙教學文章 [Day9] Face Detection - 使用OpenCV & Dlib：Haar cascades
 網址：https://ithelp.ithome.com.tw/articles/10263258
 作者：山姆大叔
 原始碼：https://github.com/saivirtue/face_under_computer_vision/blob/main/face_detection/opencv_haar_cascade.py

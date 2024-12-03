@@ -1,3 +1,19 @@
+"""
+改寫自 iT 邦幫忙教學文章 [Day10] Face Detection - 使用OpenCV & Dlib：OpenCV DNNs
+網址：https://ithelp.ithome.com.tw/articles/10263735
+作者：山姆大叔
+原始碼：https://github.com/saivirtue/face_under_computer_vision/blob/main/face_detection/opencv_haar_cascade.py
+
+
+使用 OpenCV 和 SSD（Single Shot Multibox Detector）模型來即時偵測 WebCam 影像中的人臉
+
+使用方法
+- 執行程式時，可以透過命令列參數設定最低信心度，預設值為 0.5。
+- 程式會自動啟動 WebCam，並開始即時偵測。
+- 按下 "q" 鍵可以退出程式。
+"""
+
+
 # 匯入必要套件
 import argparse
 import time
@@ -21,16 +37,16 @@ if not exists(prototxt) or not exists(caffemodel):
         caffemodel)
 
 
-# 初始化模型 (模型使用的Input Size為 (300, 300))
+# 初始化模型 (模型使用的 Input Size為 (300, 300))
 net = cv2.dnn.readNetFromCaffe(prototxt=prototxt, caffeModel=caffemodel)
 
 
 # 定義人臉偵測函數方便重複使用
 def detect(img, min_confidence=0.5):
-    # 取得img的大小(高，寬)
+    # 取得 img 的大小(高，寬)
     (h, w) = img.shape[:2]
 
-    # 建立模型使用的Input資料blob (比例變更為300 x 300)
+    # 建立模型使用的 Input 資料 blob (比例變更為 300 x 300)
     blob = cv2.dnn.blobFromImage(cv2.resize(img, (300, 300)), 1.0, (300, 300), (104.0, 177.0, 123.0))
 
     # 設定Input資料與取得模型預測結果
@@ -48,7 +64,7 @@ def detect(img, min_confidence=0.5):
         if confidence < min_confidence:
             continue
 
-        # 計算bounding box(邊界框)與準確率 - 取得(左上X，左上Y，右下X，右下Y)的值 (記得轉換回原始image的大小)
+        # 計算bounding box(邊界框)與準確率 - 取得(左上X，左上Y，右下X，右下Y)的值 (記得轉換回原始 image 的大小)
         box = detectors[0, 0, i, 3:7] * np.array([w, h, w, h])
         # 將邊界框轉成正整數，方便畫圖
         (x0, y0, x1, y1) = box.astype("int")
@@ -91,8 +107,8 @@ def main():
 
         # 標示FPS
         end = time.time()
-        cv2.putText(frame, f"FPS: {str(int(1 / (end - start)))}", (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.7,
-                    (0, 0, 255), 2)
+        cv2.putText(frame, f"FPS: {str(int(1 / (end - start)))}", (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)
+        cv2.putText(frame, "Press Q to exit", (10, 60), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 255), 2)
         start = end
 
         # 顯示影像
