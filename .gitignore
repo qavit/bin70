@@ -1,2 +1,4 @@
 .DS_Store
 /__pycache__/
+/ssd/res10_300x300_ssd_iter_140000.caffemodel
+/ssd/deploy.prototxt
