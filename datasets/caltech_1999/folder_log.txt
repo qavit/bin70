@@ -1,0 +1,29 @@
+資料夾: man_1, 照片數量: 21, 範圍: image_0001.jpg ~ image_0021.jpg
+資料夾: man_2, 照片數量: 20, 範圍: image_0022.jpg ~ image_0041.jpg
+資料夾: man_3, 照片數量: 5, 範圍: image_0042.jpg ~ image_0046.jpg
+資料夾: man_4, 照片數量: 22, 範圍: image_0047.jpg ~ image_0068.jpg
+資料夾: woman_1, 照片數量: 21, 範圍: image_0069.jpg ~ image_0089.jpg
+資料夾: man_5, 照片數量: 23, 範圍: image_0090.jpg ~ image_0112.jpg
+資料夾: woman_2, 照片數量: 20, 範圍: image_0113.jpg ~ image_0132.jpg
+資料夾: man_6, 照片數量: 5, 範圍: image_0133.jpg ~ image_0137.jpg
+資料夾: man_7, 照片數量: 21, 範圍: image_0138.jpg ~ image_0158.jpg
+資料夾: man_8, 照片數量: 7, 範圍: image_0159.jpg ~ image_0165.jpg
+資料夾: woman_3, 照片數量: 5, 範圍: image_0166.jpg ~ image_0170.jpg
+資料夾: woman_4, 照片數量: 5, 範圍: image_0171.jpg ~ image_0175.jpg
+資料夾: woman_5, 照片數量: 20, 範圍: image_0176.jpg ~ image_0195.jpg
+資料夾: man_9, 照片數量: 21, 範圍: image_0196.jpg ~ image_0216.jpg
+資料夾: man_10, 照片數量: 25, 範圍: image_0217.jpg ~ image_0241.jpg
+資料夾: man_11, 照片數量: 22, 範圍: image_0242.jpg ~ image_0263.jpg
+資料夾: man_12, 照片數量: 5, 範圍: image_0264.jpg ~ image_0268.jpg
+資料夾: woman_6, 照片數量: 19, 範圍: image_0269.jpg ~ image_0287.jpg
+資料夾: man_13, 照片數量: 20, 範圍: image_0288.jpg ~ image_0307.jpg
+資料夾: man_14, 照片數量: 29, 範圍: image_0308.jpg ~ image_0336.jpg
+資料夾: woman_7, 照片數量: 20, 範圍: image_0337.jpg ~ image_0356.jpg
+資料夾: woman_8, 照片數量: 20, 範圍: image_0357.jpg ~ image_0376.jpg
+資料夾: man_15, 照片數量: 22, 範圍: image_0377.jpg ~ image_0398.jpg
+資料夾: man_16, 照片數量: 5, 範圍: image_0404.jpg ~ image_0408.jpg
+資料夾: woman_9, 照片數量: 20, 範圍: image_0409.jpg ~ image_0428.jpg
+資料夾: woman_10, 照片數量: 22, 範圍: image_0429.jpg ~ image_0450.jpg
+刪除的照片, 照片數量: 5, 範圍: image_0399.jpg ~ image_0403.jpg
+
+https://data.caltech.edu/records/6rjah-hdv18/files/faces.tar?download=1
