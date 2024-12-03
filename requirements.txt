@@ -4,4 +4,7 @@ tensorflow
 torch
 deeplake<4
 flask
+scipy
 imutils
+scikit-learn
+scikit-image

@@ -8,7 +8,7 @@ lighting/expressions/backgrounds.
 ImageData.mat is a Matlab file containing the variable
 SubDir_Data which is an 8 x 450 matrix.
 Each column of this matrix hold the coordinates of 
-the face within the image, in the form:
+the bike within the image, in the form:
 
 [x_bot_left y_bot_left x_top_left y_top_left ... 
  x_top_right y_top_right x_bot_right y_bot_right]
