@@ -31,3 +31,9 @@ A new repository for my learning journey of **BIN7 project** --- a face recognit
 ### HOG + SVM
 
 - [x] [`HOG_SVM_webcam.py`](./face_detection/hog_svm/HOG_SVM_webcam.py) — a webcam demo for face detection using HOG + SVM
+
+## 2024-12-04
+
+### Caltech Face Dataset 1999
+
+- [x] [`caltech_1999_manager.py`](./datasets/caltech_1999/caltech_1999_manager.py) — a script for managing the Caltech Face Dataset 1999, including downloading, extracting, and organizing the dataset, and visualizing face images with bounding boxes
