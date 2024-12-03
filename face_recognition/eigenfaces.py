@@ -1,5 +1,4 @@
 # Standard library imports
-import sys
 import os
 import argparse
 import pickle
@@ -18,11 +17,8 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder
 from sklearn.svm import SVC
 
-# Add the parent directory to the Python path to import local modules
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-
 # Local application imports
-from datasets.face_roi_extractor import images_to_faces
+from face_roi_extractor import images_to_faces
 
 
 def main():
@@ -34,7 +30,7 @@ def main():
 
     data_file = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), args["input"], "data.pickle")
 
-    print("[INFO] Loading dataset....")
+    print("[INFO] Loading pickle dataset...")
     if not os.path.exists(data_file):
         (faces, labels) = images_to_faces(args["input"])
         with open(data_file, "wb") as f:
@@ -42,7 +38,7 @@ def main():
     else:
         with open(data_file, "rb") as f:
             (faces, labels) = pickle.load(f)
-    print(f"[INFO] Found {len(faces)} images in dataset")
+    print(f"[INFO] Found {len(faces)} images in pickle dataset")
 
     # 進行主成分分析時需要將資料轉成一維陣列
     pca_faces = np.array([face.flatten() for face in faces])

@@ -5,8 +5,6 @@ cv2.face_LBPHFaceRecognizer() 是 OpenCV 中用於臉部辨識的 LBPH 演算法
 
 
 # Standard library imports
-import sys
-import os
 import argparse
 # import random
 import time
@@ -20,11 +18,8 @@ from sklearn.metrics import classification_report
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder
 
-# Add the parent directory to the Python path to import local modules
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-
 # Local application imports
-from datasets.face_roi_extractor import images_to_faces
+from face_roi_extractor import images_to_faces
 
 
 def main():
@@ -33,9 +28,9 @@ def main():
     ap.add_argument("-i", "--input", type=str, required=True, help="the input dataset path")
     args = vars(ap.parse_args())
 
-    print("[INFO] Loading dataset....")
+    print("[INFO] Loading pickle dataset...")
     (faces, labels) = images_to_faces(args["input"])
-    print(f"[INFO] Found {len(faces)} images in dataset")
+    print(f"[INFO] Found {len(faces)} images in pickle dataset")
 
     # 將名稱從字串轉成整數 (在做訓練時時常會用到這個方法：label encoding)
     le = LabelEncoder()

@@ -20,12 +20,12 @@ import json
 import argparse
 
 DATASET_URL = "https://data.caltech.edu/records/6rjah-hdv18/files/faces.tar?download=1"
-
 CALTECH_1999_DIR = os.path.dirname(os.path.abspath(__file__))
+RULES = os.path.join(CALTECH_1999_DIR, "rules.json")
 TAR_FILE = os.path.join(CALTECH_1999_DIR, "faces.tar")
 METADATA = os.path.join(CALTECH_1999_DIR, "ImageData.mat")
 BOUNDING_BOXES = os.path.join(CALTECH_1999_DIR, "bbox_data.npy")
-RULES = os.path.join(CALTECH_1999_DIR, "rules.json")
+COLLAGE_IMAGE = os.path.join(CALTECH_1999_DIR, "collage_with_bboxes.jpg")
 
 
 # Download and extract dataset if not present
@@ -49,7 +49,7 @@ def download_and_extract_dataset(url, tar_path, extract_path):
 
 
 # Load metadata (ImageData.mat) and save boudning boxes data as .npy
-def load_metadata_and_save_bbox(mat_file_path, npy_file_path="bbox_data.npy", bbox_key="SubDir_Data"):
+def load_metadata_and_save_bbox(mat_file_path, npy_file_path=BOUNDING_BOXES, bbox_key="SubDir_Data"):
     # Load the .mat file
     data = loadmat(mat_file_path)
     # Extract the SubDir_Data matrix
@@ -169,7 +169,7 @@ def create_collage(subdir_data, image_dir):
     cv2.destroyAllWindows()
 
     # Save collage image
-    cv2.imwrite("collage_with_bboxes.jpg", collage_image)
+    cv2.imwrite(COLLAGE_IMAGE, collage_image)
 
 
 def rename_readme_to_ds_info(directory):
