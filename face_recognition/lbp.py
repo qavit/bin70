@@ -1,8 +1,6 @@
 """
-LBP (Local Binary Patterns) 臉部辨識
-cv2.face_LBPHFaceRecognizer() 是 OpenCV 中用於臉部辨識的 LBPH 演算法。
+LBP (Local Binary Patterns，局部二值模式) 臉部辨識
 """
-
 
 # Standard library imports
 import sys
@@ -27,6 +25,7 @@ from face_roi_extractor import images_to_faces
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from face_detection.ssd.SSD_webcam import detect_faces
 
+lbp_root_dir = os.path.dirname(os.path.abspath(__file__))
 
 def show_lbp_result(input_path, num_random_images=1):
     for _ in range(num_random_images):
@@ -36,7 +35,7 @@ def show_lbp_result(input_path, num_random_images=1):
             print(f"[ERROR] No image files found in directory: {input_path}")
             return
         image_path = random.choice(image_paths)
-        
+ 
         image = cv2.imread(image_path)
         if image is None:
             print(f"[ERROR] Failed to load image: {image_path}")
@@ -62,6 +61,7 @@ def show_lbp_result(input_path, num_random_images=1):
         print(f"[INFO] Displaying LBP image of {short_path}")
         img_with_lbp = np.hstack([roi, np.dstack([lbp] * 3)])
         cv2.imshow(f"{short_path} and its LBP", img_with_lbp)
+        cv2.imwrite(os.path.join(lbp_root_dir, "lbp_" +path_parts[-1]), img_with_lbp)
         cv2.waitKey(0)
         cv2.destroyAllWindows()
 
@@ -113,10 +113,11 @@ def train_and_predict(input_path, num_random_images=1):
         face = imutils.resize(face, width=250)
 
         cv2.putText(face, f"pred: {predName}", (5, 25), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 2)
-        cv2.putText(face, f"actual:{actualName}", (5, 60), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 0, 255), 2)
+        cv2.putText(face, f"actual: {actualName}", (5, 60), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 0, 255), 2)
 
         print(f"[INFO] Predicted: {predName}, Actual: {actualName}")
         cv2.imshow("Face", face)
+        cv2.imwrite(os.path.join(lbp_root_dir, f"lbp_pred_{predName}.jpg"), face)
         cv2.waitKey(0)
         cv2.destroyAllWindows()
 
@@ -124,7 +125,7 @@ def train_and_predict(input_path, num_random_images=1):
 if __name__ == '__main__':
     ap = argparse.ArgumentParser()
     ap.add_argument("-i", "--input", type=str, required=True, help="the input dataset path")
-    ap.add_argument("-n", "--num_images", type=int, default=3, help="the number of random images to show")
+    ap.add_argument("-n", "--num_images", type=int, default=1, help="the number of random images to show")
     args = vars(ap.parse_args())
 
     show_lbp_result(args["input"], args["num_images"])

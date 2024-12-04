@@ -28,3 +28,5 @@ A new repository for my learning journey of **BIN7 project** --- a face recognit
 - [x] [`lbp.py`](./face_recognition/lbp.py) — a script for face recognition using Local Binary Patterns
 
 ![collage](./datasets/caltech_1999/collage_with_bboxes.jpg)
+![lbp_image_0211.jpg](./face_recognition/lbp_image_0211.jpg)
+![lbp_pred_man_02.jpg](./face_recognition/lbp_pred_man_02.jpg)
